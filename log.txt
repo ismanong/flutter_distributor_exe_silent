@@ -1,3 +1,35 @@
+# 创建
+dart create -t console data_backup
+
+# 全局运行
+data_backup
+data_backup serve
+...
+
+# 本地运行
+dart run
+dart run data_backup serve
+
+# 添加到全局包的访问 （每次修改源码后，都需要从新添加，用于升级包。）
+dart pub global activate --source path .
+
+1. 执行访问（配置为从命令行运行，yaml的executables属性。）
+data_backup
+
+2. 执行访问 （未配置为从命令行运行）
+dart pub global run data_backup
+
+# 查看全局的包的列表
+dart pub global list
+
+# 停用全局包的访问
+dart pub global deactivate data_backup
+
+# 编译生产（将 Dart 代码 AOT 编译为优化的本机代码）
+dart compile exe bin/data_backup.dart
+
+===============================================================================
+
 1.快捷图标更新 默认选中 更新 修复 checkablealone 默认选中  https://newsn.net/say/innosetup-desktop-shortcut.html 
 
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: {% if CREATE_DESKTOP_ICON != true %}unchecked{% else %}checkedonce{% endif %}
