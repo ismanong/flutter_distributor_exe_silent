@@ -56,7 +56,7 @@ ArchitecturesInstallIn64BitMode=x64
 {% endfor %}
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: {% if CREATE_DESKTOP_ICON != true %}unchecked{% else %}checkedonce{% endif %}
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: {% if CREATE_DESKTOP_ICON != true %}unchecked{% else %}checkablealone{% endif %}
 Name: "launchAtStartup"; Description: "{cm:AutoStartProgram,{{DISPLAY_NAME}}}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: {% if LAUNCH_AT_STARTUP != true %}unchecked{% else %}checkedonce{% endif %}
 [Files]
 Source: "{{SOURCE_DIR}}\\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -68,6 +68,65 @@ Name: "{autodesktop}\\{{DISPLAY_NAME}}"; Filename: "{app}\\{{EXECUTABLE_NAME}}";
 Name: "{userstartup}\\{{DISPLAY_NAME}}"; Filename: "{app}\\{{EXECUTABLE_NAME}}"; WorkingDir: "{app}"; Tasks: launchAtStartup
 [Run]
 Filename: "{app}\\{{EXECUTABLE_NAME}}"; Description: "{cm:LaunchProgram,{{DISPLAY_NAME}}}"; Flags: {% if PRIVILEGES_REQUIRED == 'admin' %}runascurrentuser{% endif %} nowait postinstall skipifsilent
+
+[code]
+//关键代码静默安装
+procedure InitializeWizard();
+begin
+//不显示边框，这样就能达到不会闪两下了
+WizardForm.BorderStyle:=bsNone;
+end;
+
+
+procedure CurPageChanged(CurPageID: Integer);
+//var
+//indexpageid3:Integer;
+begin
+    //因为安装过程界面隐藏不了，所以设置窗口宽高为0
+    WizardForm.ClientWidth := ScaleX(0);
+    WizardForm.ClientHeight := ScaleY(0);
+    if CurPageID = wpWelcome then
+    WizardForm.NextButton.OnClick(WizardForm);
+    if CurPageID >= wpInstalling then
+            WizardForm.Visible := False
+        else
+            WizardForm.Visible := True;
+            // WizardForm.NextButton.OnClick(WizardForm);    
+end;
+
+function ShouldSkipPage(PageID: Integer): Boolean;
+begin
+    Result := True
+end;
+
+function IsCreateShortcut(): Boolean;
+var
+  j: Integer;
+  isVerySilent: Boolean;
+begin
+  isVerySilent := True;
+  for j := 1 to ParamCount do
+    if CompareText(ParamStr(j), '--noicon=1') = 0 then
+    begin
+      isVerySilent := False;
+      Break;
+    end; 
+
+  if isVerySilent then
+    Log ('VerySilent')
+  else
+    Log ('not VerySilent');
+  Result := isVerySilent;
+end;
+
+// 卸载删除所有文件
+procedure CurUninstallStepChanged(CurUninstallStep:TUninstallStep);
+begin
+  if CurUninstallStep = usDone then
+  begin
+  DelTree(ExpandConstant('{app}'), True, True, True);
+  end;
+end;
 """;
 
 class InnoSetupScript {
