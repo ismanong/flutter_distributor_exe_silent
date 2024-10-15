@@ -11,6 +11,7 @@ display_name: xx壁纸 测试
 create_desktop_icon: true
 
 # executable_name指的是创建的快捷方式所指向的 exe 文件，但实际上你的项目编译后输出的 exe 文件名为 xxx.exe 如果你需要修改可执行文件的名称，请修改 Runner.rc 文件
+# 应该是有多个exe时，指定一个主要的exe
 executable_name: XxxZzz.exe
 
 # 开机启动
