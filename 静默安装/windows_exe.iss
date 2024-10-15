@@ -17,7 +17,8 @@ WizardStyle=modern
 PrivilegesRequired=none
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-
+//不显示选择语言
+ShowLanguageDialog=no
 [Languages]
 
 Name: "english"; MessagesFile: "compiler:Default.isl"

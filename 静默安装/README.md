@@ -11,7 +11,11 @@ dart run
 dart run data_backup serve
 
 # 添加到全局包的访问 （每次修改源码后，都需要从新添加，用于升级包。）
+# ！！！注意清理缓存 位于项目.dart_tool目录 
+# 包含 添加包时生成的配置package_config.json 和 执行命令生成的快照.snapshot
 dart pub global activate --source path .
+# 清理并添加
+Remove-Item -Path ".dart_tool" -Recurse;dart pub global activate --source path .
 
 1. 执行访问（配置为从命令行运行，yaml的executables属性。）
 data_backup
