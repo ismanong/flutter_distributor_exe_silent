@@ -1,0 +1,222 @@
+Inno Setup一个打包安装脚本示范.2008-03-18 17:40; 脚本由 Inno Setup 脚本向导 生成！
+; 有关创建 Inno Setup 脚本文件的详细资料请查阅帮助文档！
+
+[Setup]
+; 注: AppId的值为单独标识该应用程序。
+; 不要为其他安装程序使用相同的AppId值。
+; (生成新的GUID，点击 工具|在IDE中生成GUID。)
+AppId={{A9861883-31C5-4324-BD9A-DC3271EEB675}
+;程序名
+AppName=ISsample
+;版本号
+AppVerName=ISsample 1.0.0.0
+;发布者名
+AppPublisher=Hkiss
+;相关连接
+AppPublisherURL=http://www.yan.com/
+AppSupportURL=http://www.yan.com/
+AppUpdatesURL=http://www.yan.com/
+;默认安装目录
+DefaultDirName={pf}\ISsample
+;默认开始菜单名
+DefaultGroupName=ISsample
+;是否打开->可选安装开始菜单项
+;AllowNoIcons=yes
+;安装协议
+;LicenseFile=C:\Example\原始文件\agreement.txt
+;安装前查看的文本文件
+;InfoBeforeFile=C:\Example\原始文件\Setup_New.txt
+;安装后查看文本文件
+;InfoAfterFile=C:\Example\原始文件\Setup_Old.txt
+;输出文件夹
+OutputDir=C:\Example\InnoSetup\out
+;输出文件名
+OutputBaseFilename=setup
+;安装图标
+SetupIconFile=C:\Example\原始文件\title.ico
+;安装需要输入密码
+;Password=123
+;Encryption=yes
+
+;压缩相关
+Compression=lzma
+SolidCompression=yes
+
+;可以让用户忽略选择语言相关
+ShowLanguageDialog = yes
+;备注版本信息
+VersionInfoCompany=HTTP://www.Hkiss.COM
+VersionInfoDescription=ISsample 汉化增强版
+VersionInfoVersion=1.0.0.0
+VersionInfoCopyright=Copyright (C) 2007-2008 Hkiss
+
+;制作选择语言
+[Languages]
+Name: "chs"; MessagesFile: "compiler:Default.isl" ;LicenSeFile :"C:\Example\原始文件\chs\agreement.txt"
+Name: "en"; MessagesFile: "compiler:Languages\English.isl";LicenSeFile :"C:\Example\原始文件\en\agreement.txt"
+
+;用户定制任务
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "Tasks_1" ; Description:"用户自定义任务1"; Flags: unchecked
+Name: "Tasks_2" ; Description:"用户自定义任务2"; Flags: unchecked
+;选择了组件才会出现的定制任务
+Name: "Tasks_3" ; Description:"用户自定义任务3";Components: c1 ; Flags: unchecked
+
+;文件安装
+[Files]
+;多语言安装环境设置    公共参数Languages 来设置
+Source: "C:\Example\原始文件\enfile.txt"; DestDir: "{app}"; Languages: en ; Flags: ignoreversion
+Source: "C:\Example\原始文件\chsfile.txt"; DestDir: "{app}"; Languages: chs ; Flags: ignoreversion
+;用户自定义任务 Tasks
+Source: "C:\Example\原始文件\Tasks\tasks_1.txt"; DestDir: "{app}\Tasks"; Flags: ignoreversion ;Tasks : Tasks_1
+Source: "C:\Example\原始文件\Tasks\tasks_2.txt"; DestDir: "{app}\Tasks"; Flags: ignoreversion ;Tasks :Tasks_2
+Source: "C:\Example\原始文件\Tasks\tasks_Components.txt"; DestDir: "{app}\Tasks"; Flags: ignoreversion ;Tasks :Tasks_2
+;用户定义组件安装
+Source: "C:\Example\原始文件\Components\Components_1.txt"; DestDir: "{app}\Components"; Flags: ignoreversion ; Components: a1;
+Source: "C:\Example\原始文件\Components\Components_2.txt"; DestDir: "{app}\Components"; Flags: ignoreversion ; Components: a2;
+Source: "C:\Example\原始文件\Components\Components_3.txt"; DestDir: "{app}\Components"; Flags: ignoreversion ; Components: a3;
+Source: "C:\Example\原始文件\Components\Components_4.txt"; DestDir: "{app}\Components"; Flags: ignoreversion ; Components: a1 a2 a3;
+
+;用户注册自定义Dll文件      regserver 注册 noregerror 不显示错误信息
+Source: "C:\Example\原始文件\jmail.dll"; DestDir: "{app}"; Flags: ignoreversion regserver
+;添加自述文件
+Source: "C:\Example\原始文件\ISsample.txt"; DestDir: "{app}"; Flags: ignoreversion
+;添加一个文件到缓存文件夹{Tmp} deleteafterinstall 安装后删除
+Source: "C:\Example\原始文件\test.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
+
+Source: "C:\Example\原始文件\ISsample.chm"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Example\原始文件\ISsample.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Example\原始文件\ISsample.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Example\原始文件\ISsample.ini"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Example\原始文件\ISsample.rar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Example\原始文件\ISsample_sys.dll"; DestDir: "{win}\System32"; Flags: ignoreversion
+Source: "C:\Example\原始文件\log\*"; DestDir: "{app}\log"; Flags: ignoreversion recursesubdirs createallsubdirs
+; 注意: 不要在任何共享系统文件上使用“Flags: ignoreversion”
+;安装类型设置
+[Types]
+Name: Full ;Description:"完全安装"; Flags: iscustom
+Name: Compact ;Description:"简洁安装";
+Name: Custom; Description:"自定义安装";
+;组件安装
+[Components]
+Name: c1; Description: "自定义任务3" ; Types: Full
+Name: a1; Description: "安装Components_1"; Types: Full Compact Custom ;
+Name: a2; Description: "安装Components_2"; Types : Full   Compact
+Name: a3; Description: "安装Components_3"; Types : Full
+
+;开始菜单，桌面快捷方式
+[Icons]
+Name: "{group}\ISsample"; Filename: "{app}\ISsample.exe"
+Name: "{group}\{cm:ProgramOnTheWeb,ISsample}"; Filename: "http://www.yan.com/"
+Name: "{group}\{cm:UninstallProgram,ISsample}"; Filename: "{uninstallexe}"
+Name: "{commondesktop}\ISsample"; Filename: "{app}\ISsample.exe"; Tasks: desktopicon
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\ISsample"; Filename: "{app}\ISsample.exe"; Tasks: quicklaunchicon
+;添加一个帮助文挡
+Name: {group}\ISsample 1.0.0.0 帮助文档;Filename: {app}\ISsample.chm
+
+;用来在程序安装完成后 在安装程序显示最终对话框之前执行程序 常用与运行主程序 显示自述文件 删除临时文件
+[Run]
+Filename: "{app}\ISsample.exe"; Description: "{cm:LaunchProgram,ISsample}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\ISsample.txt"; Description: "查看显示自述文件"; Flags: postinstall skipifsilent shellexec
+
+;更改显示在程序中显示的消息文本
+[Messages]
+BeveledLabel=HKiss科技
+;卸载对话框说明
+ConfirmUninstall=您真的想要从电脑中卸载ISsample吗?%n%n按 [是] 则完全删除 %1 以及它的所有组件;%n按 [否]则让软件继续留在您的电脑上.
+;定义解压说明
+;StatusExtractFiles=解压并复制主程序文件及相关库文件...
+
+;用与在用户系统中创建，修改或删除注册表健值
+[Registry]
+Root: HKLM ;SubKey:"Software\ISsample";ValueType:dword;ValueName:config;ValueData:10 ;Flags:uninsdeletevalue
+;在执行脚本
+;注意：下面是code，因为与论坛使用的代码标签重名，改为了c0de，需要改回去。
+[c0de]
+//全局变量
+var MyProgChecked: Boolean;
+
+//判断程序是否存在
+
+
+//初始华程序事件
+function InitializeSetup(): boolean;
+var Isbl: boolean;         //声明变量
+var Isstr: string;
+begin       //开始
+Isbl := true;             //变量赋值
+Isstr := '欢迎';
+if RegValueExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\ISsample', 'config') then
+begin
+    MsgBox('已安装过，请先卸载在安装',mbConfirmation, MB_OK);
+    isbl := false;
+end else
+begin
+   //MsgBox('无值',mbConfirmation, MB_OK);
+     isbl := true;
+end;
+
+//下面是个麻烦的 条件语句 end else 注意
+//if MsgBox(Isstr, mbConfirmation, MB_OKCANCEL) = IDOK then
+//begin
+// isbl := true;
+// MsgBox('执行了', mbConfirmation, MB_OK);
+//end else
+//begin
+// isbl := false;
+//MsgBox('执行了', mbConfirmation, MB_OK);
+//end;
+
+Result := Isbl;
+end;       //结束
+
+procedure CurStepChanged(CurStep: TSetupStep);
+var Isstr :string;
+begin
+if CurStep=ssInstall then       //实际安装前调用
+begin
+    //MsgBox('CurStepChanged:实际安装前调用', mbConfirmation, MB_OKCANCEL);           //安装完成后调用
+end;
+if CurStep=ssPostInstall then
+begin
+    Isstr := ExpandConstant('{tmp}\tmp.rar');
+//    if FileExists(Isstr) then
+//    begin
+//      MsgBox('文件存在',mbConfirmation, MB_OK);
+//    end else
+//    begin
+//      MsgBox('文件不存在',mbConfirmation, MB_OK);
+//    end;
+   // MsgBox('CurStepChanged:实际安装后调用', mbConfirmation, MB_OKCANCEL);
+end;
+end;
+
+//下一步 按钮按钮 事件
+function NextButtonClick(CurPageID: Integer): Boolean;
+var ResultCode: Integer;
+var IsSetup : Boolean;
+begin
+IsSetup := true ;
+case CurPageID of
+    wpSelectDir:
+       MsgBox('NextButtonClick:' #13#13 'You selected: ''' + WizardDirValue + '''.', mbInformation, MB_OK);   //WizardDirValue路径
+    wpSelectProgramGroup:
+       MsgBox('NextButtonClick:' #13#13 'You selected: ''' + WizardGroupValue + '''.', mbInformation, MB_OK); //开始菜单名
+    wpReady:
+      begin
+       if not RegValueExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Test', 'config') then   begin
+          if MsgBox('程序执行需要Test.ext,是否安装!', mbConfirmation, MB_YESNO) = idYes then begin
+           ExtractTemporaryFile('test.exe');
+            if not Exec(ExpandConstant('{tmp}\test.exe'), '', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode) then
+              MsgBox('Test.exe出错:' #13#13 ' ' + SysErrorMessage(ResultCode) + '.', mbError, MB_OK);
+          end else begin
+                IsSetup := false ;
+          end ;
+          BringToFrontAndRestore();
+        end;
+      end;
+end;
+Result := IsSetup;
+end;
