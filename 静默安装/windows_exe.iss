@@ -17,8 +17,13 @@ WizardStyle=modern
 PrivilegesRequired=none
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-//不显示选择语言
+
+// 选择语言 no=隐藏
 ShowLanguageDialog=no
+
+// 磁盘跨区(磁盘跨越) yes=启用 否则超过2G会报 disk spanning must be enabled in order to create an installation larger than 2100000000byte
+// DiskSpanning=yes
+
 [Languages]
 
 Name: "english"; MessagesFile: "compiler:Default.isl"
