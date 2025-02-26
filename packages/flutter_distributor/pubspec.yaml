@@ -29,6 +29,8 @@ dependencies:
   shell_uikit: ^0.1.1
   yaml: ^3.1.0
 
+# dart pub outdated
+# Remove-Item -Path ".dart_tool" -Recurse;dart pub global activate --source path .
 dependency_overrides:
   # image: ^4.5.2
   # archive: ^4.0.2
@@ -48,6 +50,7 @@ dependency_overrides:
   _fe_analyzer_shared: ^80.0.0
   analyzer: ^7.3.0
   shelf_web_socket: ^3.0.0
+  dio_web_adapter: ^2.1.1
 
 dev_dependencies:
   dependency_validator: ^3.0.0
