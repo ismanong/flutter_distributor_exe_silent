@@ -32,25 +32,8 @@ dependencies:
 # dart pub outdated
 # Remove-Item -Path ".dart_tool" -Recurse;dart pub global activate --source path .
 dependency_overrides:
-  # image: ^4.5.2
-  # archive: ^4.0.2
-  # petitparser: ^6.1.0
-  # http: ^1.3.0
-  # get_it: ^8.0.3
-  # qiniu_sdk_base: ^0.7.0
-  # uuid: ^4.5.1
-  # lints: ^5.1.1
-  # web_socket_channel: ^3.0.2
-  # glob: ^2.1.3
-  # dio: ^5.8.0+1
-  # dio_web_adapter: ^2.1.0
-  # async: ^2.13.0
   dependency_validator: ^5.0.2
-  test: ^1.25.15
-  _fe_analyzer_shared: ^80.0.0
-  analyzer: ^7.3.0
-  shelf_web_socket: ^3.0.0
-  dio_web_adapter: ^2.1.1
+  web: ^1.1.1
 
 dev_dependencies:
   dependency_validator: ^3.0.0
