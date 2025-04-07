@@ -26,6 +26,9 @@ PrivilegesRequired={{PRIVILEGES_REQUIRED}}
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 
+//不显示选择语言
+ShowLanguageDialog=no
+
 [Languages]
 {% for locale in LOCALES %}
 {% if locale == 'en' %}Name: "english"; MessagesFile: "compiler:Default.isl"{% endif %}
@@ -67,7 +70,33 @@ Name: "{autoprograms}\\{{DISPLAY_NAME}}"; Filename: "{app}\\{{EXECUTABLE_NAME}}"
 Name: "{autodesktop}\\{{DISPLAY_NAME}}"; Filename: "{app}\\{{EXECUTABLE_NAME}}"; Tasks: desktopicon
 Name: "{userstartup}\\{{DISPLAY_NAME}}"; Filename: "{app}\\{{EXECUTABLE_NAME}}"; WorkingDir: "{app}"; Tasks: launchAtStartup
 [Run]
-Filename: "{app}\\{{EXECUTABLE_NAME}}"; Description: "{cm:LaunchProgram,{{DISPLAY_NAME}}}"; Flags: {% if PRIVILEGES_REQUIRED == 'admin' %}runascurrentuser{% endif %} nowait postinstall skipifsilent
+Filename: "{app}\\{{EXECUTABLE_NAME}}"; Description: "{cm:LaunchProgram,{{DISPLAY_NAME}}}"; Flags: {% if PRIVILEGES_REQUIRED == 'admin' %}runascurrentuser{% endif %} nowait postinstall
+
+[Code]
+// 禁止路径空格
+function NextButtonClick(CurPageID: Integer): Boolean;
+var
+  InstallPath: string;
+begin
+  // 检查当前页面是否为选择目录页面
+  if CurPageID = wpSelectDir then
+  begin
+    // 获取用户选择的安装路径
+    InstallPath := WizardDirValue;
+
+    // 检测路径中是否包含空格
+    if Pos(' ', InstallPath) > 0 then
+    begin
+      // 提示用户路径中不能包含空格
+      MsgBox('安装路径不能包含空格，请选择一个不包含空格的目录。', mbError, MB_OK);
+      Result := False; // 阻止继续下一步
+      Exit;
+    end;
+  end;
+
+  // 如果没有问题，允许继续
+  Result := True;
+end;
 """;
 
 class InnoSetupScript {

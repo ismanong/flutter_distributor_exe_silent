@@ -1,0 +1,41 @@
+#
+# dart pub global activate --source path external/flutter_distributor-main/packages/flutter_distributor
+# flutter_distributor package --platform windows --targets exe
+#
+
+# AppId 的值唯一标识此应用。不要在其他应用的安装程序中使用相同的 AppId 值。
+app_id: 6c99909f-6cfb-41e9-91c9-aab695408f5b
+publisher_name: xooxoo
+publisher_url: https://xxx.com
+display_name: xx壁纸 测试
+create_desktop_icon: true
+
+# executable_name指的是创建的快捷方式所指向的 exe 文件，但实际上你的项目编译后输出的 exe 文件名为 xxx.exe 如果你需要修改可执行文件的名称，请修改 Runner.rc 文件
+# 应该是有多个exe时，指定一个主要的exe
+executable_name: XxxZzz.exe
+
+# 开机启动
+#launch_at_startup: true
+
+# 安装到指定目录 [ install_dir_name: XxxZzz ]
+install_dir_name: "D:\\Program Files\\XxxZzz"             # 安装至 Program Files (x86)目录
+install_dir_name: XxxZzz                                  # 安装至 当前目录
+install_dir_name: "{autoappdata}\\XxxZzz\\app" # 安装至 C:\ProgramData ({autoappdata} inno自动常量)
+install_dir_name: "{userappdata}\\XxxZzz\\app" # 安装至 C:\Users\52644\AppData\Roaming ({userappdata} inno常量)
+#UWP默认
+install_dir_name: "{localappdata}\\XxxZzz\\app" # 安装至 C:\Users\52644\AppData\Local ({localappdata} inno常量)
+install_dir_name: "{%USERPROFILE}\\AppData\\Local\\XxxZzz\\app" # 安装至 C:\Users\52644\AppData\Local ({autoappdata} inno自动常量)
+
+
+# 安装文件（setup.exe）的icon [ String? setupIconFile; ]
+#setup_icon_file: "D:\\xxx\\xxx\\xxx\\favicon.ico"
+#setup_icon_file: D:\xxx\xxx\xxx\favicon.ico
+#setup_icon_file: "D:\\_work\\desktop_tool\\wallpaper\\packages\\main\\windows\\runner\\resources\\app_icon.ico"
+setup_icon_file: ..\..\windows\runner\resources\app_icon.ico
+
+# 所需权限 [ String? privilegesRequired; ]
+#privileges_required:
+
+#locales:
+#  - en
+#  - zh
